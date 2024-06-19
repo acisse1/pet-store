@@ -36,7 +36,7 @@ public class GlobalControllerErrorHandler {
 		
 	}
 	
-	/* +==============	Handle UnsupportedOperationException	=============+	*/
+	/* +==============	Handle UnsupportedOperationException()	=============+	*/
 	
 	@ExceptionHandler(UnsupportedOperationException.class)
 	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
@@ -48,7 +48,7 @@ public class GlobalControllerErrorHandler {
 	}
 	
 	
-	/* +==============	Handle NoSuchElementException	====================+	*/
+	/* +==============	Handle NoSuchElementException()	====================+	*/
 	
 	@ExceptionHandler(NoSuchElementException.class)
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
@@ -59,7 +59,7 @@ public class GlobalControllerErrorHandler {
 				ex, HttpStatus.NOT_FOUND, webRequest, LogStatus.MESSAGE_ONLY);
 	}
 	
-	/* +==============	Handle DuplicateKeyException	====================+	*/
+	/* +==============	Handle DuplicateKeyException()	====================+	*/
 	
 	@ExceptionHandler(DuplicateKeyException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT)
@@ -68,6 +68,17 @@ public class GlobalControllerErrorHandler {
 		
 		return buildExceptionMessage(
 				ex, HttpStatus.CONFLICT, webRequest, LogStatus.MESSAGE_ONLY);
+	}
+	
+	/* +==============	Handle IllegalStateException()	====================+	*/
+	
+	@ExceptionHandler(IllegalStateException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ExceptionMessage handleIllegalStateException(
+			IllegalStateException ex, WebRequest webRequest) {
+		
+		return buildExceptionMessage(
+				ex, HttpStatus.BAD_REQUEST, webRequest, LogStatus.MESSAGE_ONLY);
 	}
 	
 	@ExceptionHandler(Exception.class)

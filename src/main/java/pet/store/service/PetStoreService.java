@@ -1,5 +1,6 @@
 package pet.store.service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -65,14 +66,17 @@ public class PetStoreService {
 	}
 	
 	/* +========	implementing findPetStoreById() ==========+	*/
+	/* +========	I made it public for package visibility ==========+	*/
 	
-	private PetStore findPetStoreById(Long petStoreId) {
+	public PetStore findPetStoreById(Long petStoreId) {
 		
 		return petStoreDao.findById(petStoreId)
 				.orElseThrow(() -> new NoSuchElementException(
 						"Pet Store with ID = " + petStoreId + " was not found."
 						));
 	}
+	
+	/* +========	implementing retrieveAllPetStores() ==========+	*/
 	
 	@Transactional(readOnly = true)
 	public List<PetStoreData> retrieveAllPetStores() {
@@ -117,6 +121,27 @@ public class PetStoreService {
 		
 		petStoreDao.delete(petStore);
 		
+	}
+
+	/* +==== implementing retrieveAllPetStoresWithNoEmployeeAndNoCustomer() ===+ */
+	
+	public List<PetStoreData> retrieveAllPetStoresWithNoEmployeeAndNoCustomer() {
+
+		List<PetStore> petStores = petStoreDao.findAll();
+		
+		List<PetStoreData> petStoreDatas = new ArrayList<PetStoreData>();
+		
+		for (PetStore petStore : petStores) {
+			
+			PetStoreData petStoreData = new PetStoreData(petStore);
+			
+			petStoreData.getEmployees().clear();
+			petStoreData.getCustomers().clear();
+			
+			petStoreDatas.add(petStoreData);
+		}
+		
+		return petStoreDatas;
 	}
 
 }

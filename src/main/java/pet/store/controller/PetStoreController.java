@@ -30,7 +30,7 @@ public class PetStoreController {
 
 /* +=================	CREATE = POST	===========================+ */
 	
-	@PostMapping("/petStore")
+	@PostMapping("/petStoreData")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PetStoreData insertPetStore(@RequestBody PetStoreData petStoreData) {
 		
@@ -42,7 +42,8 @@ public class PetStoreController {
 /* +=================	UPDATE = PUT	===========================+ */
 	
 	@PutMapping("/petStore/{petStoreDataId}")
-	public PetStoreData updatePetStore (@PathVariable Long petStoreDataId,
+	public PetStoreData updatePetStore (
+			@PathVariable Long petStoreDataId,
 			@RequestBody PetStoreData petStoreData) {
 		
 		petStoreData.setPetStoreId(petStoreDataId);
@@ -53,15 +54,23 @@ public class PetStoreController {
 	
 	/* +=================	READ = GET	===========================+ */
 	
-	@GetMapping("/petStore")
+	@GetMapping
 	public List<PetStoreData> retrieveAllPetStores () {
 		
-		log.info("Retrieving all Pet Store.");
+		log.info("Retrieving all Pet Stores with employees and customers.");
 		
 		return petStoreService.retrieveAllPetStores();
 	}
 	
-	@GetMapping("/petStore/{petStoreId}")
+	@GetMapping("/onlyPetStores")
+	public List<PetStoreData> retrieveAllPetStoresWithNoEmployeeAndNoCustomer () {
+		
+		log.info("Retrieving all Pet Stores with no employee and no customer.");
+		
+		return petStoreService.retrieveAllPetStoresWithNoEmployeeAndNoCustomer();
+	}
+ 	
+	@GetMapping("/{petStoreId}")
 	public PetStoreData retrievePetStoreById (@PathVariable Long petStoreId) {
 		
 		log.info("Retrieving a Pet Store with ID = {}", petStoreId);
@@ -82,7 +91,7 @@ public class PetStoreController {
 	}
 	
 	
-	@DeleteMapping("/petStore/{petStoreId}")
+	@DeleteMapping("/{petStoreId}")
 	public Map<String, String> deletePetStoreById (@PathVariable Long petStoreId) {
 		
 		log.info("Deleting a Pet Store with ID = {}", petStoreId);

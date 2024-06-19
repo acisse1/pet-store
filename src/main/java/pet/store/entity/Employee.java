@@ -33,7 +33,7 @@ public class Employee {
 	@Column(name = "employee_job_title")
 	private String employeeJobTitle;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)	// "All" delete the pet store. "Persist" delete only employee
 	@JoinColumn(name = "pet_store_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
